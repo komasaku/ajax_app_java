@@ -15,18 +15,15 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PostController {
 
-  private final PostRepository postRepository;
+    private final PostRepository postRepository;
+  
 
   @GetMapping("/")
   public String showList(Model model) {
     var postList = postRepository.findAll();
     model.addAttribute("postList", postList);
+    model.addAttribute("postForm", new PostForm());
     return "posts/index";
-  }
-
-  @GetMapping("/postForm")
-  public String showPostForm(@ModelAttribute("postForm") PostForm form){
-      return "posts/postForm";
   }
 
   @PostMapping("/posts")
