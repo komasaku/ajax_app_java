@@ -9,10 +9,11 @@
 <body>
   <h1>AjaxApp</h1>
 
-  <from th:action="@{/posts}" method="post" th:object="${postForm}" id="from">
-    <input type="text" th:field="*{content}"/>
-    <input type="submit" value="投稿する" id="sunmit"/>
-</from>
+  <form th:action="@{/posts}" method="post" th:object="${postForm}" id="form">
+    <input type="text" th:field="*{content}" id="content"/>
+    <input type="submit" value="投稿する" id="submit"/>
+</form>
+
 
 <div id="list">
 </div>
