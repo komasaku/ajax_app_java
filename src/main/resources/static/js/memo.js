@@ -1,3 +1,17 @@
+const buildHTML = (XHR) => {
+  const item = XHR.response;
+  const html =`
+    <div class-"post">
+     <div class="post-date">
+      投稿日時:${item.createdAt}
+      </div>
+      <div class="post-content">
+      ${item.content}
+      </div>
+    </div>`;
+  return html;
+}
+
 function post (){
   //リクエストを送信する処理
     const submit = document.getElementById("submit");
@@ -10,8 +24,24 @@ function post (){
     XHR.open("POST","/posts", true);
     XHR.responseType = "json";
     XHR.send(formData);
-  });
+    //↑までがフォームの送信
+    //ここから下がフォームを受け取って表示の意味
 
+    XHR.onload = () => {
+      if(XHR.status != 200) {
+        //リクエスト成功
+        alert(`Error ${XHR.status}: ${XHR.response.error}`);
+        return null;
+        //リウエストが成功しなかったらNULLをかえすよ
+      }
+      //投稿に成功した場合
+      const list = document.getElementById("list");
+      const formText =document.getElementById("content");
+      list.insertAdjacentHTML("afterend",buildHTML(XHR))
+      //htmlのID=listのところの後にこれを返す（挿入）の意味
+      formText.value = "";
+    };
+  });
 };
 
   window.addEventListener('load', post);
